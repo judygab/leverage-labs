@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  borderColor: (theme) => ({
+    ...theme("colors"),
+    DEFAULT: theme("#ACA9A9"),
+  }),
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",

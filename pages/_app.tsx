@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               templateAreas={`"header" "main" "footer"`}
               w="100%"
               width="100%"
-              gridTemplateRows={"100px 3f 40px"}
+              gridTemplateRows={"100px 3fr 40px"}
               gridTemplateColumns={"1fr"}
               // paddingY="2em"
               // backgroundImage="url('./background.png')"  // Replace 'your-image.jpg' with your image URL
