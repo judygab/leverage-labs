@@ -3,6 +3,7 @@ import { ChakraProvider, Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { WagmiConfig } from "wagmi";
 import { mainnet } from "wagmi/chains";
 import { theme } from "../styles/theme";
+import Fonts from "../components/Fonts";
 import Footer from "../components/core/Footer";
 import "@web3inbox/widget-react/dist/compiled.css";
 
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ChakraProvider theme={theme}>
+        <Fonts />
         <WagmiConfig config={wagmiConfig}>
           <Grid
             templateAreas={`"header" "main" "footer"`}

@@ -19,8 +19,11 @@ export const NavLink = (props: Props) => {
 
   return (
     <Button
-      variant="outline"
+      // variant="ghost"
+      top="122px" left="-94px"
       as={Link}
+      position="absolute"
+      bgColor="transparent"
       px={4}
       size="md"
       rounded={"full"}
@@ -29,7 +32,7 @@ export const NavLink = (props: Props) => {
         bg: hoverBg,
       }}
       href={href}
-      isActive={isActive}
+    // isActive={isActive}
     >
       {children}
     </Button>
