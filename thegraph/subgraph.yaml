@@ -1,0 +1,39 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Blend
+    network: mainnet
+    source:
+      address: "0x29469395eaf6f95920e59f858042f0e28d98a20b"
+      abi: Blend
+      startBlock: 17622410
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - BeaconUpgraded
+        - BuyLocked
+        - Initialized
+        - LoanOfferTaken
+        - NonceIncremented
+        - OfferCancelled
+        - OwnershipTransferStarted
+        - OwnershipTransferred
+        - Refinance
+        - Repay
+        - Seize
+        - StartAuction
+        - Upgraded
+      abis:
+        - name: Blend
+          file: ./abis/Blend.json
+      eventHandlers:
+        - event: LoanOfferTaken(bytes32,uint256,address,address,address,uint256,uint256,uint256,uint256)
+          handler: handleLoanOfferTaken
+      file: ./src/blend.ts
+
+
