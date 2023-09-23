@@ -1,0 +1,24 @@
+
+type Lien @entity {
+  id:ID!
+  collection: Bytes!
+  tokenId: BigInt!
+  borrower: Bytes!
+  timeStarted: BigInt!
+  auctionDuration: BigInt
+  auctionStarted: BigInt
+  repayTime: BigInt
+  seizeTime: BigInt
+  loans: [Loan!]! 
+}
+
+type Loan @entity {
+  id:ID!
+  lienId: ID
+  lender: Bytes!
+  loanAmount: BigInt!
+  rate: BigInt!
+  startTime: BigInt!
+  endTime: BigInt
+  lien: Lien!
+}
