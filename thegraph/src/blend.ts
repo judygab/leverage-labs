@@ -101,7 +101,7 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
     lien.timeStarted = event.block.timestamp
     lien.auctionDuration = event.params.auctionDuration
 
-    let loan = new Loan(`${lender.toString()}-${rate}-${loanAmount}`)
+    let loan = new Loan(`${lender.toHexString()}-${rate}-${loanAmount}`)
     loan.lien = lienId
     loan.lender = lender
     loan.loanAmount = loanAmount
@@ -127,16 +127,21 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
           if (loan) {
             loan.loanAmount = loanAmount
             loan.save()
+            break;
           }
         } else {
           // scenario 3: some term changed. create new loan. 
-          let loan = new Loan(`${lender.toString()}-${rate}-${loanAmount}`)
+          let loan = new Loan(`${lender.toHexString()}-${rate}-${loanAmount}`)
           loan.lien = lienId
           loan.lender = lender
           loan.loanAmount = loanAmount
           loan.rate = rate
           loan.startTime = event.block.timestamp
           loan.save()
+
+          loans.push(loan.id)
+          lien.loans = loans
+          lien.save()
         }
       }
     }
