@@ -7,7 +7,7 @@ type Props = {}
 
 const Dashboard = (props: Props) => {
   return (
-    <Container maxW='md'>
+    <Container maxW='8xl'>
       <Flex w="full" flexDirection={"column"}>
         <ChartsContainer />
       </Flex>
