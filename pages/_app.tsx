@@ -1,5 +1,7 @@
+import '../styles/global.css';
+
 import type { AppProps } from "next/app";
-import { ChakraProvider, Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { ChakraProvider, Box, Flex, Grid, GridItem, Image, HStack } from "@chakra-ui/react";
 import { WagmiConfig } from "wagmi";
 import { mainnet } from "wagmi/chains";
 import { theme } from "../styles/theme";
@@ -31,32 +33,41 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <ChakraProvider theme={theme}>
         <Fonts />
-        <WagmiConfig config={wagmiConfig}>
-          <Grid
-            templateAreas={`"header" "main" "footer"`}
-            w="100%"
-            width="100%"
-            gridTemplateRows={"100px 3f 40px"}
-            gridTemplateColumns={"1fr"}
-            paddingY="2em"
-          >
-            <GridItem area={"header"} padding={4}>
-              <Navbar />
-            </GridItem>
-            <GridItem area={"main"} padding={10}>
-              <Flex
-                flexDirection={"column"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Component {...pageProps} />
-              </Flex>
-            </GridItem>
-            <GridItem area={"footer"}>
-              <Footer />
-            </GridItem>
-          </Grid>
-        </WagmiConfig>
+        <HStack minH="100vh" sx={{
+          background: `url('./background.png') center / cover`,
+        }}>
+          <WagmiConfig config={wagmiConfig}>
+            <Grid
+              minH="100vh"
+              templateAreas={`"header" "main" "footer"`}
+              w="100%"
+              width="100%"
+              gridTemplateRows={"100px 3f 40px"}
+              gridTemplateColumns={"1fr"}
+              // paddingY="2em"
+              // backgroundImage="url('./background.png')"  // Replace 'your-image.jpg' with your image URL
+              backgroundSize="cover"
+              backgroundRepeat="no-repeat"
+              backgroundPosition="center center"
+            >
+              <GridItem area={"header"} padding={4}>
+                <Navbar />
+              </GridItem>
+              <GridItem area={"main"} padding={10}>
+                <Flex
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Component {...pageProps} />
+                </Flex>
+              </GridItem>
+              <GridItem area={"footer"}>
+                <Footer />
+              </GridItem>
+            </Grid>
+          </WagmiConfig>
+        </HStack>
       </ChakraProvider>
     </>
   );

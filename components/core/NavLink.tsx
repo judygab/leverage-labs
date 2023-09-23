@@ -27,10 +27,6 @@ export const NavLink = (props: Props) => {
       px={4}
       size="md"
       rounded={"full"}
-      _hover={{
-        textDecoration: "none",
-        bg: hoverBg,
-      }}
       href={href}
     // isActive={isActive}
     >
