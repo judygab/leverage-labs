@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
-  reactDevOverlay: false,
   // transpilePackages: ["@web3inbox/widget-react"],
   // experimental: {
   //   esmExternals: "loose",
