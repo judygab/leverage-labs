@@ -28,7 +28,10 @@ export const NavLink = (props: Props) => {
       size="md"
       rounded={"full"}
       href={href}
-    // isActive={isActive}
+      // isActive={isActive}
+      _hover={{
+        bg: "transparent", // Transparent background color on hover
+      }}
     >
       {children}
     </Button>

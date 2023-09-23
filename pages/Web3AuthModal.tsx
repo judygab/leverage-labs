@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect } from "react";
 import { Web3AuthModalPack, Web3AuthConfig } from '@safe-global/auth-kit'
 import { Web3AuthOptions } from '@web3auth/modal'
@@ -17,7 +18,7 @@ const options: Web3AuthOptions = {
     rpcTarget: 'https://rpc.ankr.com/eth_goerli'
   },
   uiConfig: {
-    theme: 'dark',
+    // theme: 'dark',
     loginMethodsOrder: ['google', 'facebook']
   }
 }

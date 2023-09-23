@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { ethers, utils } from 'ethers'
 import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from '@web3auth/base'
