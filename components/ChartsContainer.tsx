@@ -31,14 +31,14 @@ const ChartsContainer = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
 
   return (
-    <div className='flex border w-full'>
-      <div>
+    <div className='flex border w-full z-50'>
+      <div className='w-1/3 flex gap-8 flex-col'>
         {
           TabsList.map(tab => {
             return (
               <div
                 key={tab.id}
-                className={`flex items-center justify-center w-32 h-12 cursor-pointer ${selectedTab === tab.id ? 'bg-gray-100' : ''}`}
+                className={`flex items-center justify-center h-12 cursor-pointer border rounded text-white ${selectedTab === tab.id ? 'border-r-none' : ''}`}
                 onClick={() => setSelectedTab(tab.id)}
               >
                 {tab.title}
