@@ -14,17 +14,17 @@ type Tab = {
 const TabsList = [
   {
     id: 0,
-    title: 'Outstanding leverage',
+    title: '# of Auctions Started',
     component: () => <div>Tab 1</div>
   },
   {
     id: 1,
-    title: 'Loans liquidated vs refinanced',
+    title: 'Average Loan Duration',
     component: () => <div>Tab 2</div>
   },
   {
     id: 2,
-    title: 'Average loan duration',
+    title: 'Loans liquidated vs refinanced',
     component: () => <div>Tab 3</div>
   }
 ]
@@ -33,6 +33,8 @@ const ChartsContainer = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [barLabels, setBarLabels] = useState<any>([]);
   const [barData, setBarData] = useState<any>([]);
+  const [barTwoLabels, setBarTwoLabels] = useState<any>([]);
+  const [barTwoData, setBarTwoData] = useState<any>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +49,20 @@ const ChartsContainer = (props: Props) => {
       setBarLabels([...data.data.dateHour]);
       setBarData([...data.data.count]);
     }
+    const fetchDataTwo = async () => {
+      const result = await fetch("/api/collectionloans", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await result.json();
+
+      setBarTwoLabels([...data.data.collectionArray]);
+      setBarTwoData([...data.data.averageDurations]);
+    }
     fetchData();
+    fetchDataTwo();
   }, [])
 
   return (
@@ -68,7 +83,10 @@ const ChartsContainer = (props: Props) => {
         }
       </div>
       <div className='content flex-grow border min-h-[500px] p-6 bg-[#081F28]'>
-        {barData?.length > 0 && barLabels?.length > 0 ? <BarChart labels={barLabels} values={barData} /> : null}
+        {barData?.length > 0 && barLabels?.length > 0 && selectedTab === 0 ? <BarChart labels={barLabels} values={barData} bgColor={'rgba(88, 89, 187, 1)'} label={"# of Auctions Started"} /> : null}
+        {
+          selectedTab === 1 && barTwoLabels?.length > 0 && barTwoData?.length > 0 ? <BarChart labels={barTwoLabels} values={barTwoData} bgColor={'rgba(0, 108, 3, 0.8)'} label={"Average Loan Duration"} /> : null
+        }
       </div>
     </div>
   )
