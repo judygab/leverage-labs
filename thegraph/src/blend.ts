@@ -20,7 +20,11 @@ import {
 
 import { Lien, Loan } from "../generated/schema"
 
-
+// LoanOfferTaken is used to emit various situations
+// 1. brand new lien. corresponding new loan. 
+// 2. borrower repays some money, so loan amount is updated. no new loan is created.
+// 3. new loan created on existing lien. (eg. new terms, new lender and/or new amount)
+// Handle accordingly: organize data into Lien and Loan
 export function handleLoanOfferTaken(event: LoanOfferTaken): void {
 
   const lienId = event.params.lienId.toString()
@@ -59,7 +63,7 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
   else {
 
     let loans = lien.loans
-    let loansLength = loans.length
+    let loansLength = loans.length  //prior to setting this length variable, the loop was running infinitely.
 
     for (let i = 0; i < loansLength; i++) {
       let item = Loan.load(loans[i])

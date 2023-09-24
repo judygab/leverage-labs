@@ -20,7 +20,7 @@ type Loan @entity {
   loanAmount: BigInt!
   rate: BigInt!
   startTime: BigInt!
-  endTime: BigInt
+  endTime: BigInt  ##this isn't actively being used at the moment, but it's left here to be utilized in the future
   lien: Lien!
 }
 
