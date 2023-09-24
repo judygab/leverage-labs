@@ -21,7 +21,7 @@ ChartJS.register(
   Tooltip
 );
 
-export default () => {
+export default function LineChart() {
   return (
     <div>
       <h2>Bar Example (custom size)</h2>
@@ -49,4 +49,4 @@ export default () => {
     </div>
   );
 }
-  ;
+;
