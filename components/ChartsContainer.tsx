@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react'
+import BarStacked from './BarStacked';
 
 type Props = {}
 
@@ -31,14 +32,14 @@ const ChartsContainer = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
 
   return (
-    <div className='flex border w-full z-50'>
-      <div className='w-1/3 flex gap-8 flex-col'>
+    <div className='flex w-full z-50 gap-4'>
+      <div className='w-1/3 flex gap-2 flex-col'>
         {
           TabsList.map(tab => {
             return (
               <div
                 key={tab.id}
-                className={`flex items-center justify-center h-12 cursor-pointer border rounded text-white ${selectedTab === tab.id ? 'border-r-none' : ''}`}
+                className={`flex flex-1 items-center justify-center h-12 cursor-pointer border rounded text-white hover:text-[#CAEFF9] ${selectedTab === tab.id ? 'border-r-none' : ''}`}
                 onClick={() => setSelectedTab(tab.id)}
               >
                 {tab.title}
@@ -47,8 +48,8 @@ const ChartsContainer = (props: Props) => {
           })
         }
       </div>
-      <div className='content min-h-[500px]'>
-        <p>Content</p>
+      <div className='content flex-grow border min-h-[500px]'>
+        <BarStacked />
       </div>
     </div>
   )

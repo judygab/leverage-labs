@@ -160,6 +160,7 @@ const Home: NextPage = () => {
 
   return (
     <Flex w="full" flexDirection={"column"} maxW="700px">
+      <Messages />
       <Image
         aria-label="WalletConnect"
         src={

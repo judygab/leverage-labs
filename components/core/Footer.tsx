@@ -11,7 +11,9 @@ function Footer() {
 
   return (
     <Box justifyContent="flex-end" position="fixed" right="36px" bottom="36px">
-      <Flex alignItems="center" gap={4} position="relative">
+      <Flex alignItems="end" flexDirection="column" gap={4} position="relative">
+        <div className="rounded-full w-2 h-2 bg-red-500 absolute right-3 top-0"></div>
+        <Image aria-label="ring" src={"./bell-rounded-light.svg"} paddingRight={2} />
         <Image
           aria-label="WalletConnect"
           src={
@@ -27,7 +29,7 @@ function Footer() {
               }
               position={"absolute"}
               right="1.5rem"
-              bottom="5rem"
+              bottom="8rem"
               zIndex={0}
             />
           </>}
