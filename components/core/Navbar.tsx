@@ -69,7 +69,14 @@ function Navbar() {
 
   // We need to set the account as soon as the user is connected
   useEffect(() => {
-    if (!Boolean(address)) return;
+    if (!Boolean(address)) {
+      toast({
+        title: "Please connect your wallet to subscribe to notifications",
+        position: "top",
+        variant: "subtle",
+      });
+      return;
+    }
     setAccount(`eip155:1:${address}`);
   }, [signMessage, address, setAccount]);
 
