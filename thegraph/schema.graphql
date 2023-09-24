@@ -10,15 +10,17 @@ type Lien @entity {
   repayTime: BigInt
   seizeTime: BigInt
   loans: [Loan!]! 
+  # loans: [Loan!]! @derivedFrom(field: "lien")
 }
 
 type Loan @entity {
   id:ID!
-  lienId: ID
+  lienId: String
   lender: Bytes!
   loanAmount: BigInt!
   rate: BigInt!
   startTime: BigInt!
-  endTime: BigInt
+  endTime: BigInt  ##this isn't actively being used at the moment, but it's left here to be utilized in the future
   lien: Lien!
 }
+
