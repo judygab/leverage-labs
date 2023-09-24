@@ -50,10 +50,6 @@ const ChartsContainer = (props: Props) => {
     fetchData();
   }, [])
 
-  useEffect(() => {
-    console.log(barData);
-  }, [barData])
-
   return (
     <div className='flex w-full z-50 gap-4'>
       <div className='w-1/3 flex gap-2 flex-col'>
@@ -62,7 +58,7 @@ const ChartsContainer = (props: Props) => {
             return (
               <div
                 key={tab.id}
-                className={`flex flex-1 items-center justify-center h-12 cursor-pointer border rounded text-white hover:text-[#CAEFF9] ${selectedTab === tab.id ? 'border-r-none' : ''}`}
+                className={`flex flex-1 items-center justify-center h-12 cursor-pointer text-white hover:text-[#CAEFF9] ${selectedTab === tab.id ? 'border-t border-b border-l rounded-l' : 'border rounded'}`}
                 onClick={() => setSelectedTab(tab.id)}
               >
                 {tab.title}

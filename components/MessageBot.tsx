@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Image, Divider } from "@chakra-ui/react";
+import { useMessages, useW3iAccount } from "@web3inbox/widget-react";
 
 type Props = {
   close: () => void
 }
 
 const MessageBot = ({ close }: Props) => {
+  const { account } = useW3iAccount();
+  const { messages, deleteMessage } = useMessages(account);
+
   return (
     <div className='bg-[#D9D9D9] p-9 rounded-[45px] rounded-br-none absolute  bottom-44 right-6 z-50'>
       <div className='flex content-between items-start border-b-2 border-black'>
@@ -14,10 +18,19 @@ const MessageBot = ({ close }: Props) => {
           <Image aria-label="close" src={"./x-rounded.svg"} />
         </Button></div>
       <ul>
-        <li className='border-b border-black'>18th June 2022: Action Started</li>
-        <li className='border-b border-black'>17th July 2022: Action Started</li>
-        <li className='border-b border-black'>16th August 2022: Action Started</li>
-        <li className='border-b border-black'>15th September 2022: Action Started</li>
+        {
+          messages
+            .sort((a, b) => b.id - a.id)
+            .slice(-5)
+            .map(({ id, message }: any) => {
+              return (
+                <li key={id} className='border-b border-black'>
+                  <p className='text-black'>{message.title}: {message.body}</p>
+                </li>
+              )
+            }
+            )
+        }
       </ul>
       <Divider />
     </div>

@@ -26,7 +26,7 @@ function Messages() {
 
   return (
     <Accordion>
-      <AccordionItem>
+      <AccordionItem color="white">
         <AccordionButton>
           <Heading fontSize="md" as="span" flex="1" textAlign="left">
             Last Messages
