@@ -38,6 +38,8 @@ function Navbar() {
     isUnsubscribing,
   } = useManageSubscription(account);
 
+  console.log("isSubscribed", isSubscribed);
+
   const { address } = useAccount({
     onDisconnect: () => {
       setAccount("");

@@ -85,6 +85,36 @@ const Home: NextPage = () => {
     setAccount(`eip155:1:${address}`);
   }, [signMessage, address, setAccount]);
 
+  useEffect(() => {
+    if (!Boolean(account)) return;
+    if (!isSubscribed) {
+      return;
+    }
+
+    const fetchData = async () => {
+      const result = await fetch("/api/auctions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await result.json();
+      const results = data?.data?.liens?.slice(-3) || [];
+      console.log(data)
+      results.forEach((result: any) => {
+        handleSendNotification({
+          title: "Auction Started",
+          body: result.auctionStarted,
+          icon: `${window.location.origin}/eth-glyph-colored.png`,
+          url: `https://etherscan.io/tx/${result.auctionStarted}`,
+          type: "transactional",
+        });
+      }
+      )
+    }
+    fetchData();
+  }, [account, isSubscribed]);
+
   const handleRegistration = useCallback(async () => {
     if (!account) return;
     try {
@@ -154,12 +184,13 @@ const Home: NextPage = () => {
     isBlockNotificationEnabled,
   ]);
 
-  useInterval(() => {
-    handleBlockNotification();
-  }, 12000);
+  // useInterval(() => {
+  //   handleBlockNotification();
+  // }, 12000);
 
   return (
     <Flex w="full" flexDirection={"column"} maxW="700px">
+      <Messages />
       <Image
         aria-label="WalletConnect"
         src={

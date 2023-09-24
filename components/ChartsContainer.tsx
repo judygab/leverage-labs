@@ -1,5 +1,7 @@
+// @ts-nocheck
 "use client";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import BarChart from './BarChart';
 
 type Props = {}
 
@@ -29,16 +31,34 @@ const TabsList = [
 
 const ChartsContainer = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [barLabels, setBarLabels] = useState<any>([]);
+  const [barData, setBarData] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch("/api/loansduration", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await result.json();
+
+      setBarLabels([...data.data.sortedDateArray]);
+      setBarData([...data.data.averageDurationsInMinutes]);
+    }
+    fetchData();
+  }, [])
 
   return (
-    <div className='flex border w-full z-50'>
-      <div className='w-1/3 flex gap-8 flex-col'>
+    <div className='flex w-full gap-4'>
+      <div className='w-1/3 flex gap-2 z-50 flex-col'>
         {
           TabsList.map(tab => {
             return (
               <div
                 key={tab.id}
-                className={`flex items-center justify-center h-12 cursor-pointer border rounded text-white ${selectedTab === tab.id ? 'border-r-none' : ''}`}
+                className={`flex flex-1 items-center justify-center h-12 cursor-pointer text-white hover:text-[#CAEFF9] ${selectedTab === tab.id ? 'border-t border-b border-l rounded-l' : 'border rounded'}`}
                 onClick={() => setSelectedTab(tab.id)}
               >
                 {tab.title}
@@ -47,8 +67,8 @@ const ChartsContainer = (props: Props) => {
           })
         }
       </div>
-      <div className='content min-h-[500px]'>
-        <p>Content</p>
+      <div className='content flex-grow border min-h-[500px]'>
+        {barData?.length > 0 && barLabels?.length > 0 ? <BarChart labels={barLabels} values={barData} /> : null}
       </div>
     </div>
   )
