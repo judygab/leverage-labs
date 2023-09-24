@@ -14,6 +14,7 @@ import {
   useColorMode,
   useToast,
 } from "@chakra-ui/react";
+import { Web3Button } from '@web3modal/react'
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
@@ -104,7 +105,8 @@ function Navbar() {
           <Image aria-label="ring" src={"./bell-rounded.svg"} paddingRight={2} />
           {(!Boolean(address) || !isSubscribed) ? <span>Subscribe to Alerts</span> : null}
         </button>
-        <w3m-button label="Connect Wallet" balance="show" />
+        {/* <w3m-button label="Connect Wallet" balance="show" /> */}
+        <Web3Button />
       </div>
     </Flex>
   );
