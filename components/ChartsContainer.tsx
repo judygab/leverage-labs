@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react'
-import BarStacked from './BarStacked';
+import BarChart from './BarChart';
 
 type Props = {}
 
@@ -49,7 +49,7 @@ const ChartsContainer = (props: Props) => {
         }
       </div>
       <div className='content flex-grow border min-h-[500px]'>
-        <BarStacked />
+        <BarChart />
       </div>
     </div>
   )

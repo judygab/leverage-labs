@@ -3,7 +3,6 @@
 import ResizableBox from "./ResizableBox";
 import useDemoConfig from "../hooks/useDemoConfig";
 import React from "react";
-import { AxisOptions, Chart } from "react-charts";
 import dynamic from 'next/dynamic';
 
 // Dynamically import the specific named exports
@@ -11,7 +10,7 @@ const DynamicChart = dynamic(() =>
   import('react-charts').then((mod) => mod.Chart), { ssr: false }
 );
 
-const DynamicAxisOptions = dynamic(() =>
+const DynamicDynamicAxisOptions = dynamic(() =>
   import('react-charts').then((mod) => mod.AxisOptions, { ssr: false })
 );
 
@@ -22,7 +21,7 @@ export default function BarStacked() {
   });
 
   const primaryAxis = React.useMemo<
-    AxisOptions<typeof data[number]["data"][number]>
+    DynamicAxisOptions<typeof data[number]["data"][number]>
   >(
     () => ({
       getValue: (datum) => datum.primary,
@@ -31,7 +30,7 @@ export default function BarStacked() {
   );
 
   const secondaryAxes = React.useMemo<
-    AxisOptions<typeof data[number]["data"][number]>[]
+    DynamicAxisOptions<typeof data[number]["data"][number]>[]
   >(
     () => [
       {
