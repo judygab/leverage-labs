@@ -53,7 +53,7 @@ export default function BarChart(props: any) {
       {
         label: 'Average Loan Duration',
         data: props.values.map((value: any) => value),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: 'rgba(88, 89, 187, 1)',
       },
     ],
   };

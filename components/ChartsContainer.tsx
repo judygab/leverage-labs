@@ -36,7 +36,7 @@ const ChartsContainer = (props: Props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch("/api/loansduration", {
+      const result = await fetch("/api/auctionhourly", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,8 +44,8 @@ const ChartsContainer = (props: Props) => {
       });
       const data = await result.json();
 
-      setBarLabels([...data.data.sortedDateArray]);
-      setBarData([...data.data.averageDurationsInMinutes]);
+      setBarLabels([...data.data.dateHour]);
+      setBarData([...data.data.count]);
     }
     fetchData();
   }, [])
@@ -58,7 +58,7 @@ const ChartsContainer = (props: Props) => {
             return (
               <div
                 key={tab.id}
-                className={`flex flex-1 items-center justify-center h-12 cursor-pointer text-white hover:text-[#CAEFF9] ${selectedTab === tab.id ? 'border-t border-b border-l rounded-l' : 'border rounded'}`}
+                className={`bg-[#081F28] flex flex-1 items-center justify-center h-12 cursor-pointer text-white hover:text-[#CAEFF9] ${selectedTab === tab.id ? 'border-t border-b border-l rounded-l' : 'border rounded'}`}
                 onClick={() => setSelectedTab(tab.id)}
               >
                 {tab.title}
@@ -67,7 +67,7 @@ const ChartsContainer = (props: Props) => {
           })
         }
       </div>
-      <div className='content flex-grow border min-h-[500px] p-6'>
+      <div className='content flex-grow border min-h-[500px] p-6 bg-[#081F28]'>
         {barData?.length > 0 && barLabels?.length > 0 ? <BarChart labels={barLabels} values={barData} /> : null}
       </div>
     </div>
