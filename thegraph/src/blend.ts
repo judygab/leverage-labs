@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, log } from "@graphprotocol/graph-ts"
 
 import {
   Blend,
@@ -43,7 +43,7 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
     lien.timeStarted = event.block.timestamp
     lien.auctionDuration = event.params.auctionDuration
 
-    let loan = new Loan(`${lender.toHexString()}-${rate}-${loanAmount}`)
+    let loan = new Loan(lender.toHexString() + "-" + rate.toString() + "_" + loanAmount.toString())
     loan.lien = lienId
     loan.lienId = lienId
     loan.lender = lender
@@ -59,22 +59,19 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
   else {
 
     let loans = lien.loans
+    let loansLength = loans.length
 
-    for (let i = 0; i < loans.length; i++) {
+    for (let i = 0; i < loansLength; i++) {
       let item = Loan.load(loans[i])
 
       if (item) {
         // scenario 2: same term. update loan amount (borrower paid back some money)
         if (item.lender == lender && item.rate == rate && item.loanAmount != loanAmount) {
-          let loan = Loan.load(item.id)
-          if (loan) {
-            loan.loanAmount = loanAmount
-            loan.save()
-          }
+          item.loanAmount = loanAmount
+          item.save()
         } else {
           // scenario 3: some term changed. create new loan.
-          let loanid = `${lender.toHexString()}-${rate}-${loanAmount}`
-          let loan = new Loan(loanid)
+          let loan = new Loan(lender.toHexString() + "-" + rate.toString() + "_" + loanAmount.toString())
           loan.lien = lienId
           loan.lienId = lienId
           loan.lender = lender
@@ -83,9 +80,10 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
           loan.startTime = event.block.timestamp
           loan.save()
 
-          loans.push(loanid) // comment out for v16. no error v16.
-          lien.loans = loans
-
+          let newArray = loans
+          newArray.push(lender.toHexString() + "-" + rate.toString() + "_" + loanAmount.toString()) // comment out for v16. no error v16.
+          lien.loans = newArray
+          log.warning("Loop # {}", [i.toString()])
           //reset auction start, assuming new loan was taken on existing lien
           lien.auctionStarted = null
 
@@ -94,10 +92,6 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
       }
     }
   }
-
-
-
-
 }
 
 
