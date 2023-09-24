@@ -1,5 +1,6 @@
+// @ts-nocheck
 "use client";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BarChart from './BarChart';
 
 type Props = {}
@@ -30,6 +31,28 @@ const TabsList = [
 
 const ChartsContainer = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [barLabels, setBarLabels] = useState<any>([]);
+  const [barData, setBarData] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch("/api/loansduration", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await result.json();
+
+      setBarLabels([...data.data.sortedDateArray]);
+      setBarData([...data.data.averageDurationsInMinutes]);
+    }
+    fetchData();
+  }, [])
+
+  useEffect(() => {
+    console.log(barData);
+  }, [barData])
 
   return (
     <div className='flex w-full z-50 gap-4'>
@@ -49,7 +72,7 @@ const ChartsContainer = (props: Props) => {
         }
       </div>
       <div className='content flex-grow border min-h-[500px]'>
-        <BarChart />
+        {barData?.length > 0 && barLabels?.length > 0 ? <BarChart labels={barLabels} values={barData} /> : null}
       </div>
     </div>
   )

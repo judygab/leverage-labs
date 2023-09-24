@@ -35,22 +35,28 @@ export const options = {
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
+// export const data = {
+//   labels,
+//   datasets: [
+//     {
+//       label: 'Average Loan Duration',
+//       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+//       backgroundColor: 'rgba(255, 99, 132, 0.5)',
+//     },
+//   ],
+// };
 
-export default function BarChart() {
+export default function BarChart(props: any) {
+  console.log(props);
+  const data = {
+    labels: props.labels,
+    datasets: [
+      {
+        label: 'Average Loan Duration',
+        data: props.values.map((value: any) => value),
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
   return <Bar options={options} data={data} />;
 }
