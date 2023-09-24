@@ -2,7 +2,7 @@ import '../styles/global.css';
 
 import type { AppProps } from "next/app";
 import { ChakraProvider, Box, Flex, Grid, GridItem, Image, HStack } from "@chakra-ui/react";
-import { WagmiConfig } from "wagmi";
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { mainnet } from "wagmi/chains";
 import { theme } from "../styles/theme";
 import Fonts from "../components/Fonts";
@@ -10,6 +10,8 @@ import Footer from "../components/core/Footer";
 import "@web3inbox/widget-react/dist/compiled.css";
 
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
+import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
+import { Web3Modal } from '@web3modal/react'
 import Navbar from "../components/core/Navbar";
 
 // 1. Get projectID at https://cloud.walletconnect.com
@@ -18,15 +20,24 @@ if (!projectId) {
   throw new Error("You need to provide NEXT_PUBLIC_PROJECT_ID env variable");
 }
 
+const chains = [mainnet]
 // 2. Configure Web3Modal
-const chains = [mainnet];
-const wagmiConfig = defaultWagmiConfig({
-  chains,
-  projectId,
-  appName: "GM Hackers",
-});
+// const chains = [mainnet];
+// const wagmiConfig = defaultWagmiConfig({
+//   chains,
+//   projectId,
+//   appName: "GM Hackers",
+// });
 
-createWeb3Modal({ wagmiConfig, projectId, chains });
+const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, chains }),
+  publicClient
+})
+
+// createWeb3Modal({ wagmiConfig, projectId, chains });
+const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -58,6 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   flexDirection={"column"}
                   justifyContent={"center"}
                   alignItems={"center"}
+                  h="full"
                 >
                   <Component {...pageProps} />
                 </Flex>
@@ -67,6 +79,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               </GridItem>
             </Grid>
           </WagmiConfig>
+          <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
         </HStack>
       </ChakraProvider>
     </>

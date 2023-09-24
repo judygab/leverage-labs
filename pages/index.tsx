@@ -1,5 +1,6 @@
 "use client";
 import type { NextPage } from "next";
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from "react";
 import {
   Accordion,
@@ -29,10 +30,15 @@ import Subscription from "../components/Subscription";
 import { sendNotification } from "../utils/fetchNotify";
 import Subscribers from "../components/Subscribers";
 
+import { useWeb3Modal } from '@web3modal/react'
+
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
 
 const Home: NextPage = () => {
+  const router = useRouter()
+  /** Web3Modal SDK state **/
+  const { open, close } = useWeb3Modal()
   /** Web3Inbox SDK hooks **/
   const isW3iInitialized = useInitWeb3InboxClient({
     projectId,
@@ -83,6 +89,8 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!Boolean(address)) return;
     setAccount(`eip155:1:${address}`);
+    // redirect to dashboard page
+    router.push('/dashboard')
   }, [signMessage, address, setAccount]);
 
   useEffect(() => {
@@ -189,8 +197,12 @@ const Home: NextPage = () => {
   // }, 12000);
 
   return (
-    <Flex w="full" flexDirection={"column"} maxW="700px">
-      <Messages />
+    <Flex w="full" h="full" flexDirection={"column"} alignItems={"center"} justifyContent={"center"} maxW="700px">
+      <Heading textColor={"white"} textAlign={"center"} mb={12}>View Your Loans</Heading>
+      <div className="flex items-center justify-center">
+        <button className="bg-[#CAEFF9] hover:bg-[#aceafb] py-6 px-12 w-[19rem] rounded text-black" onClick={() => open()}>Connect</button>
+      </div>
+      {/* <Messages />
       <Image
         aria-label="WalletConnect"
         src={
@@ -198,12 +210,12 @@ const Home: NextPage = () => {
             ? "/WalletConnect-white.svg"
             : "/WalletConnect-black.svg"
         }
-      />
-      <Heading alignSelf={"center"} textAlign={"center"} mb={6}>
+      /> */}
+      {/* <Heading alignSelf={"center"} textAlign={"center"} mb={6}>
         Web3Inbox hooks
-      </Heading>
+      </Heading> */}
 
-      <Flex flexDirection="column" gap={4}>
+      {/* <Flex flexDirection="column" gap={4}>
         {isSubscribed ? (
           <Flex flexDirection={"column"} alignItems="center" gap={4}>
             <Button
@@ -278,7 +290,7 @@ const Home: NextPage = () => {
             <Subscribers />
           </Accordion>
         )}
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 };
