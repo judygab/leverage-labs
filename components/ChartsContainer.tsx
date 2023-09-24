@@ -51,8 +51,8 @@ const ChartsContainer = (props: Props) => {
   }, [])
 
   return (
-    <div className='flex w-full z-50 gap-4'>
-      <div className='w-1/3 flex gap-2 flex-col'>
+    <div className='flex w-full gap-4'>
+      <div className='w-1/3 flex gap-2 z-50 flex-col'>
         {
           TabsList.map(tab => {
             return (

@@ -184,9 +184,9 @@ const Home: NextPage = () => {
     isBlockNotificationEnabled,
   ]);
 
-  useInterval(() => {
-    handleBlockNotification();
-  }, 12000);
+  // useInterval(() => {
+  //   handleBlockNotification();
+  // }, 12000);
 
   return (
     <Flex w="full" flexDirection={"column"} maxW="700px">
