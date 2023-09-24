@@ -67,7 +67,7 @@ const ChartsContainer = (props: Props) => {
           })
         }
       </div>
-      <div className='content flex-grow border min-h-[500px]'>
+      <div className='content flex-grow border min-h-[500px] p-6'>
         {barData?.length > 0 && barLabels?.length > 0 ? <BarChart labels={barLabels} values={barData} /> : null}
       </div>
     </div>
