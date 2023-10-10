@@ -33,9 +33,8 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
   const rate = event.params.rate
   const lender = event.params.lender
 
+  // try to obtain lienId: see if it's already indexed
   let lien = Lien.load(lienId)
-
-
 
   //scenario1: brand new lien. create new lien & loan
   if (!lien) {
@@ -47,8 +46,8 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
     lien.timeStarted = event.block.timestamp
     lien.auctionDuration = event.params.auctionDuration
 
-    let loan = new Loan(lender.toHexString() + "-" + rate.toString() + "_" + loanAmount.toString())
-    loan.lien = lienId
+    let loan = new Loan(lender.toHexString() + "_" + rate.toHexString() + "_" + loanAmount.toHexString())
+    loan.lien = lienId   // links to parent lien
     loan.lienId = lienId
     loan.lender = lender
     loan.loanAmount = loanAmount
@@ -56,17 +55,17 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
     loan.startTime = event.block.timestamp
     loan.save()
 
-    lien.loans = [loan.id]
+    // lien.loans = [loan.id]
     lien.save()
   }
 
   else {
 
-    let loans = lien.loans
+    let loans = lien.loans.load()
     let loansLength = loans.length  //prior to setting this length variable, the loop was running infinitely.
 
     for (let i = 0; i < loansLength; i++) {
-      let item = Loan.load(loans[i])
+      let item = Loan.load(loans[i].id)
 
       if (item) {
         // scenario 2: same term. update loan amount (borrower paid back some money)
@@ -75,7 +74,7 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
           item.save()
         } else {
           // scenario 3: some term changed. create new loan.
-          let loan = new Loan(lender.toHexString() + "-" + rate.toString() + "_" + loanAmount.toString())
+          let loan = new Loan(lender.toHexString() + "_" + rate.toHexString() + "_" + loanAmount.toHexString())
           loan.lien = lienId
           loan.lienId = lienId
           loan.lender = lender
@@ -84,10 +83,12 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
           loan.startTime = event.block.timestamp
           loan.save()
 
-          let newArray = loans
-          newArray.push(lender.toHexString() + "-" + rate.toString() + "_" + loanAmount.toString()) // comment out for v16. no error v16.
-          lien.loans = newArray
-          log.warning("Loop # {}", [i.toString()])
+          //old code to when lien.loans was manually managed as an array of IDs
+          // let newArray = loans
+          // newArray.push(loan) // comment out for v16. no error v16.
+          // lien.loans = newArray
+          // log.warning("Loop # {}", [i.toString()])
+
           //reset auction start, assuming new loan was taken on existing lien
           lien.auctionStarted = null
 
@@ -101,34 +102,35 @@ export function handleLoanOfferTaken(event: LoanOfferTaken): void {
 
 // track when repay event was triggered
 export function handleRepay(event: Repay): void {
-  // const lienId = event.params.lienId
+  const lienId = event.params.lienId
 
-  // let lien = Lien.load(lienId.toString())
-  // if (lien) {
-  //   lien.repayTime = event.block.timestamp
-  //   lien.save()
-  // }
+  let lien = Lien.load(lienId.toString())
+  if (lien) {
+    lien.repayTime = event.block.timestamp
+    lien.save()
+  }
 }
 
 // track when SEIZE event was triggered
 export function handleSeize(event: Seize): void {
-  // const lienId = event.params.lienId
+  const lienId = event.params.lienId
 
-  // let lien = Lien.load(lienId.toString())
-  // if (lien) {
-  //   lien.seizeTime = event.block.timestamp
-  //   lien.save()
-  // }
+  let lien = Lien.load(lienId.toString())
+  if (lien) {
+    lien.seizeTime = event.block.timestamp
+    lien.save()
+  }
 }
 
 export function handleStartAuction(event: StartAuction): void {
-  // const lienId = event.params.lienId
+  log.warning("Found StartAuction Event {}", [ event.params.lienId.toString() ])
+  const lienId = event.params.lienId
 
-  // let lien = Lien.load(lienId.toString())
-  // if (lien) {
-  //   lien.auctionStarted = event.block.timestamp
-  //   lien.save()
-  // }
+  let lien = Lien.load(lienId.toString())
+  if (lien) {
+    lien.auctionStarted = event.block.timestamp
+    lien.save()
+  }
 }
 
 
