@@ -202,7 +202,7 @@ const Home: NextPage = () => {
     <>
       <HeroSection />
       <div className='absolute bottom-0 hidden lg:block right-[calc(1/3*45vw)]'>
-        <div className='h-[calc(2/3*100vh)] mt-20 w-[40rem]' style={{ backgroundImage: "url('/mobile-mockup.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} />
+        <div className='h-[calc(2/3*100vh)] mt-20 w-[10rem] lg:w-[40rem]' style={{ backgroundImage: "url('/mobile-mockup.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} />
       </div>
     </>
   );
