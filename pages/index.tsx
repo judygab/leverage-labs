@@ -32,6 +32,8 @@ import Subscribers from "../components/Subscribers";
 
 import { useWeb3Modal } from '@web3modal/react'
 
+import HeroSection from "../components/HeroSection";
+
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string;
 const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN as string;
 
@@ -197,101 +199,12 @@ const Home: NextPage = () => {
   // }, 12000);
 
   return (
-    <Flex w="full" h="full" flexDirection={"column"} alignItems={"center"} justifyContent={"center"} maxW="700px">
-      <Heading textColor={"white"} textAlign={"center"} mb={12}>View Your Loans</Heading>
-      <div className="flex items-center justify-center">
-        <button className="bg-[#CAEFF9] hover:bg-[#aceafb] py-6 px-12 w-[19rem] rounded text-black" onClick={() => open()}>Connect</button>
+    <>
+      <HeroSection />
+      <div className='absolute bottom-0 hidden lg:block right-[calc(1/3*45vw)]'>
+        <div className='h-[calc(2/3*100vh)] mt-20 w-[40rem]' style={{ backgroundImage: "url('/mobile-mockup.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} />
       </div>
-      {/* <Messages />
-      <Image
-        aria-label="WalletConnect"
-        src={
-          colorMode === "dark"
-            ? "/WalletConnect-white.svg"
-            : "/WalletConnect-black.svg"
-        }
-      /> */}
-      {/* <Heading alignSelf={"center"} textAlign={"center"} mb={6}>
-        Web3Inbox hooks
-      </Heading> */}
-
-      {/* <Flex flexDirection="column" gap={4}>
-        {isSubscribed ? (
-          <Flex flexDirection={"column"} alignItems="center" gap={4}>
-            <Button
-              leftIcon={<BsSendFill />}
-              variant="outline"
-              onClick={handleTestNotification}
-              isDisabled={!isW3iInitialized}
-              colorScheme="purple"
-              rounded="full"
-              isLoading={isSending}
-              loadingText="Sending..."
-            >
-              Send test notification
-            </Button>
-            <Button
-              leftIcon={isBlockNotificationEnabled ? <FaPause /> : <FaPlay />}
-              variant="outline"
-              onClick={() =>
-                setIsBlockNotificationEnabled((isEnabled) => !isEnabled)
-              }
-              isDisabled={!isW3iInitialized}
-              colorScheme={isBlockNotificationEnabled ? "orange" : "blue"}
-              rounded="full"
-            >
-              {isBlockNotificationEnabled ? "Pause" : "Resume"} block
-              notifications
-            </Button>
-            <Button
-              leftIcon={<FaBellSlash />}
-              onClick={unsubscribe}
-              variant="outline"
-              isDisabled={!isW3iInitialized || !account}
-              colorScheme="red"
-              isLoading={isUnsubscribing}
-              loadingText="Unsubscribing..."
-              rounded="full"
-            >
-              Unsubscribe
-            </Button>
-          </Flex>
-        ) : (
-          <Tooltip
-            label={
-              !Boolean(address)
-                ? "Connect your wallet first."
-                : "Register your account."
-            }
-            hidden={Boolean(account)}
-          >
-            <Button
-              leftIcon={<FaBell />}
-              onClick={subscribe}
-              colorScheme="cyan"
-              rounded="full"
-              variant="outline"
-              w="fit-content"
-              alignSelf="center"
-              isLoading={isSubscribing}
-              loadingText="Subscribing..."
-              isDisabled={!Boolean(address) || !Boolean(account)}
-            >
-              Subscribe
-            </Button>
-          </Tooltip>
-        )}
-
-        {isSubscribed && (
-          <Accordion defaultIndex={[1]} allowToggle mt={10} rounded="xl">
-            <Subscription />
-            <Messages />
-            <Preferences />
-            <Subscribers />
-          </Accordion>
-        )}
-      </Flex> */}
-    </Flex>
+    </>
   );
 };
 
