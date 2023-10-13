@@ -68,17 +68,17 @@ function Navbar() {
   );
 
   // We need to set the account as soon as the user is connected
-  useEffect(() => {
-    if (!Boolean(address)) {
-      toast({
-        title: "Please connect your wallet to subscribe to notifications",
-        position: "top",
-        variant: "subtle",
-      });
-      return;
-    }
-    setAccount(`eip155:1:${address}`);
-  }, [signMessage, address, setAccount]);
+  // useEffect(() => {
+  //   if (!Boolean(address)) {
+  //     toast({
+  //       title: "Please connect your wallet to subscribe to notifications",
+  //       position: "top",
+  //       variant: "subtle",
+  //     });
+  //     return;
+  //   }
+  //   setAccount(`eip155:1:${address}`);
+  // }, [signMessage, address, setAccount]);
 
   const handleRegistration = useCallback(async () => {
     if (!account) return;
@@ -107,14 +107,14 @@ function Navbar() {
           />
         </NavLink>
       </Flex>
-      <div className="flex">
+      {/* <div className="flex">
         <button onClick={subscribe} className="bg-[#CAEFF9] hover:bg-[#99e4f9] px-4 py-2 mr-4 text-black rounded flex">
           <Image aria-label="ring" src={"./bell-rounded.svg"} paddingRight={2} />
           {(!Boolean(address) || !isSubscribed) ? <span>Subscribe to Alerts</span> : null}
         </button>
-        {/* <w3m-button label="Connect Wallet" balance="show" /> */}
+        <w3m-button label="Connect Wallet" balance="show" />
         <Web3Button />
-      </div>
+      </div> */}
     </Flex>
   );
 }

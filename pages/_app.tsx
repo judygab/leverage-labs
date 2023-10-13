@@ -50,7 +50,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <WagmiConfig config={wagmiConfig}>
             <Grid
               minH="100vh"
-              templateAreas={`"header" "main" "footer"`}
+              maxH={"100vh"}
+              // templateAreas={`"header" "main" "footer"`}
+              templateAreas={`"header" "main"`}
               w="100%"
               width="100%"
               gridTemplateRows={"100px 3fr 40px"}
@@ -74,9 +76,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </Flex>
               </GridItem>
-              <GridItem area={"footer"}>
+              {/* <GridItem area={"footer"}>
                 <Footer />
-              </GridItem>
+              </GridItem> */}
             </Grid>
           </WagmiConfig>
           <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
