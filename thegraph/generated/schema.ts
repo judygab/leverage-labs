@@ -170,17 +170,8 @@ export class Lien extends Entity {
     }
   }
 
-  get loans(): Array<string> {
-    let value = this.get("loans");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toStringArray();
-    }
-  }
-
-  set loans(value: Array<string>) {
-    this.set("loans", Value.fromStringArray(value));
+  get loans(): LoanLoader {
+    return new LoanLoader("Lien", this.get("id")!.toString(), "loans");
   }
 }
 
@@ -320,5 +311,23 @@ export class Loan extends Entity {
 
   set lien(value: string) {
     this.set("lien", Value.fromString(value));
+  }
+}
+
+export class LoanLoader extends Entity {
+  _entity: string;
+  _field: string;
+  _id: string;
+
+  constructor(entity: string, id: string, field: string) {
+    super();
+    this._entity = entity;
+    this._id = id;
+    this._field = field;
+  }
+
+  load(): Loan[] {
+    let value = store.loadRelated(this._entity, this._id, this._field);
+    return changetype<Loan[]>(value);
   }
 }

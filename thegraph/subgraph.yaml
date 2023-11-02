@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0x29469395eaf6f95920e59f858042f0e28d98a20b" ## proxy address. ABI was obtained via implementation contract address.
       abi: Blend
-      startBlock: 18180000 # due to indexing speed issue, start block was set to very recenet block
+      startBlock: 18220000 # due to indexing speed issue, start block was set to very recenet block
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -34,6 +34,10 @@ dataSources:
       eventHandlers:
         - event: LoanOfferTaken(bytes32,uint256,address,address,address,uint256,uint256,uint256,uint256)
           handler: handleLoanOfferTaken
+        - event: Repay(uint256,address)
+          handler: handleRepay
+        - event: Seize(uint256,address)
+          handler: handleSeize
+        - event: StartAuction(uint256,address)
+          handler: handleStartAuction
       file: ./src/blend.ts
-
-
